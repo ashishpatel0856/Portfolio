@@ -6,7 +6,7 @@ import About from './components/About'
 import Skills from './components/Skills'
 import Projects from './components/Projects'
 import Education from './components/Education'
-import CodingProfile from './components/CodingProfiles'
+import CodingProfile from './components/CodingProfile'
 import Certifications from './components/Certifications'
 import Contact from './components/Contact'
 
@@ -15,11 +15,9 @@ function App() {
   const [scrolled, setScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState('home')
 
-  // Google Drive Resume Link - YEHAN APNI DRIVE LINK DAALO
-  // Format: https://drive.google.com/file/d/FILE_ID/view?usp=sharing
+
   const RESUME_DRIVE_LINK = "https://drive.google.com/file/d/1T0alyodqDHxpymGb330Ep4tc1NrrTiBu/view?usp=sharing"
   
-  // Direct download link banane ke liye
   const getDirectDownloadLink = (driveLink) => {
     const fileId = driveLink.match(/\/d\/(.+?)\//)?.[1] || driveLink.match(/id=(.+?)(&|$)/)?.[1]
     if (fileId) {
