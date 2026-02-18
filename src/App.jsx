@@ -16,7 +16,7 @@ function App() {
   const [activeSection, setActiveSection] = useState('home')
 
 
-  const RESUME_DRIVE_LINK = "https://drive.google.com/file/d/1CHp8UgwCr6MjJyiCz4tNvModcBT4EQA7/view?usp=sharing"
+  const RESUME_DRIVE_LINK = "https://drive.google.com/file/d/1UXp1eevJuQDZOGt_oHlV5pTpmN-ao7Mr/view?usp=sharing"
   
   const getDirectDownloadLink = (driveLink) => {
     const fileId = driveLink.match(/\/d\/(.+?)\//)?.[1] || driveLink.match(/id=(.+?)(&|$)/)?.[1]
