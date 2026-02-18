@@ -229,7 +229,7 @@ const Hero = () => {
                 transition={{ duration: 0.3 }}
               >
                 <img
-                  src="/src/assets/photo.jpeg"
+                  src="/assets/photo.jpeg"
                   alt="Ashish Kumar"
                   className="w-full h-full object-cover object-top"
                   style={{ objectPosition: 'center 20%' }}
