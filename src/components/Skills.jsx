@@ -2,6 +2,16 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 
+// Simple colored placeholder component
+const SkillPlaceholder = ({ name, color }) => (
+  <div 
+    className="w-full h-full rounded-lg flex items-center justify-center text-white font-bold text-xl"
+    style={{ backgroundColor: color }}
+  >
+    {name[0]}
+  </div>
+)
+
 const skillCategories = [
   {
     title: 'Languages',
@@ -22,7 +32,7 @@ const skillCategories = [
       { name: 'Spring AI', icon: 'https://media.licdn.com/dms/image/v2/D4D12AQFVA-eMrxTzQw/article-cover_image-shrink_720_1280/B4DZXbS0oqHAAI-/0/1743140900084', color: '#6db33f' },
       { name: 'REST APIs', icon: 'https://cdn-icons-png.flaticon.com/512/2164/2164832.png', color: '#ff6c37' },
       { name: 'Microservices', icon: 'https://cdn-icons-png.flaticon.com/512/2821/2821637.png', color: '#00d4aa' },
-      { name: 'JWT Auth', icon: 'https://assets.streamlinehq.com/image/private/w_300,h_300,ar_1/f_auto/v1/icons/4/jwt-icon-138bxvrhijus263d2f2wur.png/jwt-icon-aqjx58uyj3lrxtborzgyg.png', color: '#d63aff' },
+      { name: 'JWT Auth', icon: 'https://cdn-icons-png.flaticon.com/512/6001/6001527.png', color: '#d63aff' },
     ],
   },
   {
@@ -52,7 +62,7 @@ const skillCategories = [
       { name: 'AWS', icon: 'https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg', color: '#ff9900' },
       { name: 'Git', icon: 'https://upload.wikimedia.org/wikipedia/commons/e/e0/Git-logo.svg', color: '#f05032' },
       { name: 'GitHub', icon: 'https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png', color: '#ffffff' },
-      { name: 'Kafka', icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Apache_kafka_wordtype.svg/3840px-Apache_kafka_wordtype.svg.png', color: '#231f20' },
+      { name: 'Kafka', icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Apache_kafka.svg/1200px-Apache_kafka.svg.png', color: '#231f20' },
       { name: 'Postman', icon: 'https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg', color: '#ff6c37' },
     ],
   },
@@ -63,6 +73,12 @@ const Skills = () => {
     triggerOnce: true,
     threshold: 0.1,
   })
+
+  const [failedImages, setFailedImages] = React.useState(new Set())
+
+  const handleImageError = (skillName) => {
+    setFailedImages(prev => new Set(prev).add(skillName))
+  }
 
   return (
     <section id="skills" className="py-20 bg-darker relative">
@@ -105,15 +121,18 @@ const Skills = () => {
                     whileHover={{ scale: 1.05, y: -5 }}
                     className="skill-card glass-card p-4 flex flex-col items-center gap-3 group cursor-pointer glow-hover"
                   >
-                    <div className="w-16 h-16 rounded-xl bg-white/5 flex items-center justify-center p-3 group-hover:bg-white/10 transition-all">
-                      <img
-                        src={skill.icon}
-                        alt={skill.name}
-                        className="w-full h-full object-contain"
-                        onError={(e) => {
-                          e.target.src = `https://via.placeholder.com/64/${skill.color.replace('#', '')}/ffffff?text=${skill.name[0]}`
-                        }}
-                      />
+                    <div className="w-16 h-16 rounded-xl bg-white/5 flex items-center justify-center p-3 group-hover:bg-white/10 transition-all overflow-hidden">
+                      {failedImages.has(skill.name) ? (
+                        <SkillPlaceholder name={skill.name} color={skill.color} />
+                      ) : (
+                        <img
+                          src={skill.icon}
+                          alt={skill.name}
+                          className="w-full h-full object-contain"
+                          onError={() => handleImageError(skill.name)}
+                          loading="lazy"
+                        />
+                      )}
                     </div>
                     <span className="text-sm font-medium text-center group-hover:text-primary transition-colors">
                       {skill.name}

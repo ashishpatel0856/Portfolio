@@ -29,7 +29,7 @@ const education = [
     institution: 'BLSS Convent ICV',
     location: 'Prayagraj, India',
     period: '2022',
-    score: 'Percentage: 82%',
+    score: 'Percentage: 80.40%',
     icon: Award,
     color: 'from-secondary to-accent',
   },
