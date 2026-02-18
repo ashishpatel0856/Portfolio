@@ -1,7 +1,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { Github, Linkedin, Mail, Phone, ChevronDown } from 'lucide-react'
-import photo from '/assets/photo.jpeg'  
+import photo from '../assets/photo.jpeg'  
 
 // Typing animation component
 const TypingText = ({ text, className, delay = 0 }) => {
