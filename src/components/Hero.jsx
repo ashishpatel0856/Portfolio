@@ -1,12 +1,11 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { Github, Linkedin, Mail, Phone, ChevronDown } from 'lucide-react'
+import photo from '../assets/photo.jpeg'  // <-- Line 4: Import photo
 
-// Google Drive direct image URL
-const PHOTO_URL = "https://lh3.googleusercontent.com/d/1zsNu4zH0W0ozRQ-Wp98dRtCi4tVE2BZwB"
+// Use imported photo
+const PHOTO_URL = photo  
 
-// Base64 placeholder image (no external URL)
-const FALLBACK_IMAGE = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgZmlsbD0iIzYzNjZmMSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LXNpemU9IjE4MCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5BSzwvdGV4dD48L3N2Zz4='
 
 // Typing animation component
 const TypingText = ({ text, className, delay = 0 }) => {
