@@ -1,6 +1,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { Github, Linkedin, Mail, Phone, ChevronDown } from 'lucide-react'
+import photo from '../assets/photo.jpeg'  
 
 // Typing animation component
 const TypingText = ({ text, className, delay = 0 }) => {
@@ -229,7 +230,7 @@ const Hero = () => {
                 transition={{ duration: 0.3 }}
               >
                 <img
-                  src="/assets/photo.jpeg"
+                  src={photo}
                   alt="Ashish Kumar"
                   className="w-full h-full object-cover object-top"
                   style={{ objectPosition: 'center 20%' }}
