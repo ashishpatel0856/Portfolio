@@ -1,7 +1,12 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { Github, Linkedin, Mail, Phone, ChevronDown } from 'lucide-react'
-import photo from '../assets/photo.jpeg'  
+
+// Google Drive direct image URL
+const PHOTO_URL = "https://lh3.googleusercontent.com/d/1zsNu4zH0W0ozRQ-Wp98dRtCi4tVE2BZwB"
+
+// Base64 placeholder image (no external URL)
+const FALLBACK_IMAGE = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgZmlsbD0iIzYzNjZmMSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LXNpemU9IjE4MCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5BSzwvdGV4dD48L3N2Zz4='
 
 // Typing animation component
 const TypingText = ({ text, className, delay = 0 }) => {
@@ -45,42 +50,42 @@ const TypingText = ({ text, className, delay = 0 }) => {
 
 const Hero = () => {
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16 md:pt-20">
       {/* Animated Background */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob" />
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-secondary/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000" />
-        <div className="absolute -bottom-32 left-1/3 w-96 h-96 bg-accent/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000" />
+        <div className="absolute top-0 left-1/4 w-64 h-64 md:w-96 md:h-96 bg-primary/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob" />
+        <div className="absolute top-0 right-1/4 w-64 h-64 md:w-96 md:h-96 bg-secondary/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000" />
+        <div className="absolute -bottom-32 left-1/3 w-64 h-64 md:w-96 md:h-96 bg-accent/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000" />
       </div>
 
       {/* Grid Pattern */}
       <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%239C92AC\' fill-opacity=\'0.05\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-0">
+        <div className="flex flex-col-reverse lg:grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           
           {/* Left Content */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center lg:text-left order-2 lg:order-1"
+            className="text-center lg:text-left w-full"
           >
             <motion.div
               initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
-              className="inline-block mb-6"
+              className="inline-block mb-4 md:mb-6"
             >
-              <span className="px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium">
+              <span className="px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs md:text-sm font-medium">
                 👋 Welcome to my portfolio
               </span>
             </motion.div>
 
-            <div className="mb-6">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-2">
-                <TypingText text="Hi, I'm" className="block text-white mb-2" delay={0.2} />
-                <span className="text-gradient text-5xl md:text-6xl lg:text-7xl">
+            <div className="mb-4 md:mb-6">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-1 md:mb-2">
+                <TypingText text="Hi, I'm" className="block text-white mb-1 md:mb-2" delay={0.2} />
+                <span className="text-gradient text-4xl sm:text-5xl md:text-6xl lg:text-7xl">
                   <TypingText text="Ashish Kumar" delay={0.8} />
                 </span>
               </h1>
@@ -90,35 +95,29 @@ const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.5, duration: 0.8 }}
-              className="text-lg md:text-xl text-gray-400 mb-8 max-w-xl mx-auto lg:mx-0"
+              className="text-base sm:text-lg md:text-xl text-gray-400 mb-6 md:mb-8 max-w-xl mx-auto lg:mx-0"
             >
               Full Stack Developer specializing in{' '}
               <motion.span 
                 className="text-primary font-semibold inline-block"
-                animate={{ 
-                  scale: [1, 1.05, 1],
-                  transition: { duration: 2, repeat: Infinity }
-                }}
+                animate={{ scale: [1, 1.05, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
               >
                 Spring Boot
               </motion.span>
               ,{' '}
               <motion.span 
                 className="text-secondary font-semibold inline-block"
-                animate={{ 
-                  scale: [1, 1.05, 1],
-                  transition: { duration: 2, repeat: Infinity, delay: 0.3 }
-                }}
+                animate={{ scale: [1, 1.05, 1] }}
+                transition={{ duration: 2, repeat: Infinity, delay: 0.3 }}
               >
                 React
               </motion.span>
               , and{' '}
               <motion.span 
                 className="text-accent font-semibold inline-block"
-                animate={{ 
-                  scale: [1, 1.05, 1],
-                  transition: { duration: 2, repeat: Infinity, delay: 0.6 }
-                }}
+                animate={{ scale: [1, 1.05, 1] }}
+                transition={{ duration: 2, repeat: Infinity, delay: 0.6 }}
               >
                 Microservices
               </motion.span>
@@ -128,33 +127,23 @@ const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.8, duration: 0.8 }}
-              className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mb-10"
+              className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 md:gap-4 mb-8 md:mb-10"
             >
               <motion.a
                 href="#projects"
-                className="px-8 py-4 bg-gradient-to-r from-primary to-secondary rounded-full text-white font-semibold flex items-center gap-2 glow-hover relative overflow-hidden group"
+                className="w-full sm:w-auto px-6 py-3 md:px-8 md:py-4 bg-gradient-to-r from-primary to-secondary rounded-full text-white text-sm md:text-base font-semibold flex items-center justify-center gap-2 glow-hover relative overflow-hidden group"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
                 <span className="relative z-10">View My Work</span>
-                <motion.span 
-                  className="absolute inset-0 bg-white/20"
-                  initial={{ x: '-100%' }}
-                  whileHover={{ x: '100%' }}
-                  transition={{ duration: 0.5 }}
-                />
               </motion.a>
               <motion.a
                 href="#contact"
-                className="px-8 py-4 border border-white/20 rounded-full text-white font-semibold hover:bg-white/5 transition-all relative overflow-hidden"
+                className="w-full sm:w-auto px-6 py-3 md:px-8 md:py-4 border border-white/20 rounded-full text-white text-sm md:text-base font-semibold hover:bg-white/5 transition-all text-center"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <motion.span
-                  className="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 opacity-0 group-hover:opacity-100"
-                  whileHover={{ opacity: 1 }}
-                />
-                <span className="relative z-10">Contact Me</span>
+                Contact Me
               </motion.a>
             </motion.div>
 
@@ -163,9 +152,9 @@ const Hero = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 2, duration: 0.8 }}
-              className="flex items-center justify-center lg:justify-start gap-4"
+              className="flex items-center justify-center lg:justify-start gap-3 md:gap-4"
             >
-              <span className="text-sm text-gray-500 mr-2">Follow me:</span>
+              <span className="text-xs md:text-sm text-gray-500 mr-1 md:mr-2">Follow:</span>
               {[
                 { icon: Github, href: 'https://github.com/ashishpatel0856', label: 'GitHub' },
                 { icon: Linkedin, href: 'https://www.linkedin.com/in/ashish-patel-28a572304', label: 'LinkedIn' },
@@ -177,14 +166,14 @@ const Hero = () => {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-3 rounded-full bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:bg-primary/20 hover:border-primary/50 transition-all"
-                  whileHover={{ scale: 1.2, rotate: 5, y: -3 }}
+                  className="p-2.5 md:p-3 rounded-full bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:bg-primary/20 hover:border-primary/50 transition-all"
+                  whileHover={{ scale: 1.2, y: -3 }}
                   whileTap={{ scale: 0.9 }}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 2.2 + index * 0.1 }}
                 >
-                  <social.icon size={20} />
+                  <social.icon size={18} className="md:w-5 md:h-5" />
                 </motion.a>
               ))}
             </motion.div>
@@ -192,15 +181,15 @@ const Hero = () => {
 
           {/* Right Content - Photo */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.8, rotate: 10 }}
-            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.4, type: "spring" }}
-            className="flex justify-center order-1 lg:order-2"
+            className="flex justify-center w-full"
           >
             <div className="relative">
-              {/* Animated Rings */}
+              {/* Animated Rings - Hidden on small mobile */}
               <motion.div
-                className="absolute inset-0 rounded-full border-2 border-primary/30"
+                className="absolute inset-0 rounded-full border-2 border-primary/30 hidden sm:block"
                 animate={{ 
                   scale: [1, 1.1, 1],
                   opacity: [0.5, 0.2, 0.5],
@@ -210,7 +199,7 @@ const Hero = () => {
                 style={{ width: '120%', height: '120%', top: '-10%', left: '-10%' }}
               />
               <motion.div
-                className="absolute inset-0 rounded-full border-2 border-secondary/30"
+                className="absolute inset-0 rounded-full border-2 border-secondary/30 hidden sm:block"
                 animate={{ 
                   scale: [1.1, 1, 1.1],
                   opacity: [0.3, 0.6, 0.3],
@@ -221,21 +210,22 @@ const Hero = () => {
               />
               
               {/* Glow Effect */}
-              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary/20 to-secondary/20 blur-2xl" />
+              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary/20 to-secondary/20 blur-2xl scale-110" />
               
               {/* Photo Container */}
               <motion.div
-                className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-white/10 shadow-2xl"
+                className="relative w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-80 lg:h-80 rounded-full overflow-hidden border-4 border-white/10 shadow-2xl mx-auto"
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
               >
                 <img
-                  src={photo}
+                  src={PHOTO_URL}
                   alt="Ashish Kumar"
                   className="w-full h-full object-cover object-top"
-                  style={{ objectPosition: 'center 20%' }}
+                  style={{ objectPosition: 'center 15%' }}
                   onError={(e) => {
-                    e.target.src = 'https://via.placeholder.com/400x400/6366f1/ffffff?text=AK'
+                    e.target.onerror = null
+                    e.target.src = FALLBACK_IMAGE
                   }}
                 />
                 
@@ -243,26 +233,16 @@ const Hero = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
               </motion.div>
 
-              {/* Floating Badges */}
+              {/* Floating Badge - Only Available for Work */}
               <motion.div
-                className="absolute -bottom-4 -right-4 px-4 py-2 rounded-full bg-card border border-white/10 shadow-lg"
+                className="absolute -bottom-2 -right-2 md:-bottom-4 md:-right-4 px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-card border border-white/10 shadow-lg"
                 initial={{ opacity: 0, scale: 0 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 1.5, type: "spring" }}
                 whileHover={{ scale: 1.1 }}
               >
-                <span className="text-sm font-semibold text-primary">Available for Work</span>
+                <span className="text-xs md:text-sm font-semibold text-primary">Available for Work</span>
               </motion.div>
-
-              {/* <motion.div
-                className="absolute top-4 -left-4 px-3 py-1.5 rounded-full bg-card border border-white/10 shadow-lg"
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 1.7, type: "spring" }}
-                whileHover={{ scale: 1.1 }}
-              >
-                <span className="text-xs font-medium text-secondary">2+ Years Exp.</span>
-              </motion.div> */}
             </div>
           </motion.div>
         </div>
@@ -272,16 +252,10 @@ const Hero = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 2.5, duration: 0.8 }}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+          className="absolute bottom-4 md:bottom-8 left-1/2 transform -translate-x-1/2 hidden md:flex flex-col items-center gap-2"
         >
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
-            className="flex flex-col items-center gap-2"
-          >
-            <span className="text-xs text-gray-500">Scroll Down</span>
-            <ChevronDown size={20} className="text-gray-500" />
-          </motion.div>
+          <span className="text-xs text-gray-500">Scroll</span>
+          <ChevronDown size={20} className="text-gray-500" />
         </motion.div>
       </div>
     </section>
