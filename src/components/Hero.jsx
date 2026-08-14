@@ -1,248 +1,320 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Github, Linkedin, Mail, Phone, ChevronDown } from 'lucide-react'
-import photo from '../assets/photo.jpeg'  // <-- Line 4: Import photo
+import { Github, Linkedin, Mail, Phone, ChevronDown, MapPin, Download, ArrowRight } from 'lucide-react'
 
-// Use imported photo
-const PHOTO_URL = photo  
+import PHOTO_URL from '../assets/photo.jpeg'
 
-
-// Typing animation component
-const TypingText = ({ text, className, delay = 0 }) => {
+const TypingText = ({ text, className = '', delay = 0 }) => {
   const letters = Array.from(text)
-  
-  const container = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.05,
-        delayChildren: delay,
-      },
-    },
-  }
-
-  const child = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { type: "spring", damping: 12, stiffness: 100 }
-    },
-  }
-
   return (
     <motion.span
-      className={className}
-      variants={container}
+      className={`inline-block ${className}`}
       initial="hidden"
       animate="visible"
+      variants={{
+        hidden: { opacity: 0 },
+        visible: { opacity: 1, transition: { staggerChildren: 0.04, delayChildren: delay } }
+      }}
     >
-      {letters.map((letter, index) => (
-        <motion.span key={index} variants={child} className="inline-block">
-          {letter === " " ? "\u00A0" : letter}
+      {letters.map((letter, i) => (
+        <motion.span
+          key={i}
+          variants={{
+            hidden: { opacity: 0, y: 12 },
+            visible: { opacity: 1, y: 0, transition: { type: 'spring', damping: 20, stiffness: 150 } }
+          }}
+          className="inline-block"
+        >
+          {letter === ' ' ? '\u00A0' : letter}
         </motion.span>
       ))}
     </motion.span>
   )
 }
 
-const Hero = () => {
+
+const Particles = () => {
+  const [particles, setParticles] = useState([])
+  useEffect(() => {
+    const p = Array.from({ length: 15 }, (_, i) => ({
+      id: i,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      size: Math.random() * 2 + 1,
+      duration: Math.random() * 10 + 8,
+      delay: Math.random() * 5
+    }))
+    setParticles(p)
+  }, [])
+
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16 md:pt-20">
-      {/* Animated Background */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-0 left-1/4 w-64 h-64 md:w-96 md:h-96 bg-primary/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob" />
-        <div className="absolute top-0 right-1/4 w-64 h-64 md:w-96 md:h-96 bg-secondary/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000" />
-        <div className="absolute -bottom-32 left-1/3 w-64 h-64 md:w-96 md:h-96 bg-accent/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000" />
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {particles.map(p => (
+        <motion.div
+          key={p.id}
+          className="absolute rounded-full"
+          style={{
+            left: `${p.x}%`, top: `${p.y}%`, width: p.size, height: p.size,
+            background: 'linear-gradient(135deg, #8b5cf6, #06b6d4)',
+            boxShadow: `0 0 ${p.size * 4}px rgba(139,92,246,0.25)`
+          }}
+          animate={{ y: [0, -20, 0], opacity: [0.15, 0.5, 0.15] }}
+          transition={{ duration: p.duration, delay: p.delay, repeat: Infinity, ease: 'easeInOut' }}
+        />
+      ))}
+    </div>
+  )
+}
+
+
+const Hero = ({ resumeLink, onDownload }) => {
+  const [imgError, setImgError] = useState(false)
+  const [imgLoaded, setImgLoaded] = useState(false)
+
+  const socials = [
+    { icon: Github, href: 'https://github.com/ashishpatel0856', label: 'GitHub' },
+    { icon: Linkedin, href: 'https://www.linkedin.com/in/ashish-patel-28a572304', label: 'LinkedIn' },
+    { icon: Mail, href: 'mailto:ashishkumarr0856@gmail.com', label: 'Email' },
+    { icon: Phone, href: 'tel:+919129900856', label: 'Phone' },
+  ]
+
+  const techStack = ['Java', 'Spring Boot', 'React', 'MySQL', 'Docker', 'AWS']
+
+  return (
+    <section id="home" className="relative min-h-[95vh] flex items-center justify-center bg-[#08080c] overflow-hidden">
+
+      {/* ===== BACKGROUND EFFECTS ===== */}
+      <div className="absolute inset-0">
+        {/* Gradient Orbs */}
+        <motion.div 
+          className="absolute top-[15%] left-[20%] w-[350px] h-[350px] rounded-full opacity-[0.07]"
+          style={{ background: 'radial-gradient(circle, #8b5cf6 0%, transparent 70%)' }}
+          animate={{ scale: [1, 1.2, 1], opacity: [0.05, 0.1, 0.05] }}
+          transition={{ duration: 12, repeat: Infinity }}
+        />
+        <motion.div 
+          className="absolute bottom-[20%] right-[15%] w-[400px] h-[400px] rounded-full opacity-[0.06]"
+          style={{ background: 'radial-gradient(circle, #06b6d4 0%, transparent 70%)' }}
+          animate={{ scale: [1.2, 1, 1.2], opacity: [0.04, 0.08, 0.04] }}
+          transition={{ duration: 14, repeat: Infinity }}
+        />
+
+        {/* Dot Grid */}
+        <div 
+          className="absolute inset-0 opacity-[0.015]"
+          style={{
+            backgroundImage: `radial-gradient(circle, rgba(139,92,246,0.5) 1px, transparent 1px)`,
+            backgroundSize: '40px 40px'
+          }}
+        />
+
+        <Particles />
       </div>
 
-      {/* Grid Pattern */}
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%239C92AC\' fill-opacity=\'0.05\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20" />
+      {/* ===== MAIN CONTENT ===== */}
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-5 sm:px-6 lg:px-8 pt-20 pb-10">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16">
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-0">
-        <div className="flex flex-col-reverse lg:grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-          
-          {/* Left Content */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center lg:text-left w-full"
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5 }}
-              className="inline-block mb-4 md:mb-6"
+          {/* ===== LEFT: TEXT CONTENT ===== */}
+          <div className="flex-1 text-center lg:text-left max-w-xl order-2 lg:order-1">
+
+            {/* Availability Badge */}
+            <motion.div 
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1, duration: 0.5 }}
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-5 border border-emerald-500/15 bg-emerald-500/5"
             >
-              <span className="px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs md:text-sm font-medium">
-                👋 Welcome to my portfolio
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
               </span>
+              <span className="text-[11px] text-emerald-400 font-medium">Available for work</span>
             </motion.div>
 
-            <div className="mb-4 md:mb-6">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-1 md:mb-2">
-                <TypingText text="Hi, I'm" className="block text-white mb-1 md:mb-2" delay={0.2} />
-                <span className="text-gradient text-4xl sm:text-5xl md:text-6xl lg:text-7xl">
-                  <TypingText text="Ashish Kumar" delay={0.8} />
+            {/* Greeting */}
+            <motion.h1 
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+              className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-1"
+            >
+              <TypingText text="Hi, I'm" delay={0.3} />
+            </motion.h1>
+
+            {/* NAME - This is the critical fix */}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.6 }}
+              className="mb-4"
+            >
+              <h2 
+                className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight"
+                style={{
+                  background: 'linear-gradient(135deg, #a78bfa 0%, #22d3ee 50%, #a78bfa 100%)',
+                  backgroundSize: '200% auto',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  animation: 'gradientShift 4s ease infinite'
+                }}
+              >
+                Ashish Kumar
+              </h2>
+            </motion.div>
+
+            {/* Location & Role */}
+            <motion.div 
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.5 }}
+              className="flex items-center justify-center lg:justify-start gap-2 mb-4"
+            >
+              <MapPin size={12} className="text-gray-600" />
+              <span className="text-gray-500 text-xs">Ghaziabad, India</span>
+              <span className="text-gray-700">·</span>
+              <span className="text-gray-500 text-xs">Full Stack Developer</span>
+            </motion.div>
+
+            {/* Description */}
+            <motion.p 
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.55, duration: 0.5 }}
+              className="text-gray-400 text-sm sm:text-base mb-5 leading-relaxed max-w-md mx-auto lg:mx-0"
+            >
+              Building scalable applications with{' '}
+              <span className="text-violet-400 font-medium">Spring Boot</span>,{' '}
+              <span className="text-cyan-400 font-medium">React</span>, &{' '}
+              <span className="text-emerald-400 font-medium">Microservices</span>
+            </motion.p>
+
+            {/* Tech Stack Tags */}
+            <motion.div 
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.5 }}
+              className="flex flex-wrap justify-center lg:justify-start gap-2 mb-6"
+            >
+              {techStack.map((tech) => (
+                <span 
+                  key={tech} 
+                  className="px-3 py-1 text-[11px] font-medium rounded-lg text-gray-400 bg-white/[0.03] border border-white/[0.06] hover:border-violet-500/20 hover:text-white transition-all duration-300"
+                >
+                  {tech}
                 </span>
-              </h1>
-            </div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.5, duration: 0.8 }}
-              className="text-base sm:text-lg md:text-xl text-gray-400 mb-6 md:mb-8 max-w-xl mx-auto lg:mx-0"
-            >
-              Full Stack Developer specializing in{' '}
-              <motion.span 
-                className="text-primary font-semibold inline-block"
-                animate={{ scale: [1, 1.05, 1] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              >
-                Spring Boot
-              </motion.span>
-              ,{' '}
-              <motion.span 
-                className="text-secondary font-semibold inline-block"
-                animate={{ scale: [1, 1.05, 1] }}
-                transition={{ duration: 2, repeat: Infinity, delay: 0.3 }}
-              >
-                React
-              </motion.span>
-              , and{' '}
-              <motion.span 
-                className="text-accent font-semibold inline-block"
-                animate={{ scale: [1, 1.05, 1] }}
-                transition={{ duration: 2, repeat: Infinity, delay: 0.6 }}
-              >
-                Microservices
-              </motion.span>
+              ))}
             </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
+            {/* CTA Buttons */}
+            <motion.div 
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.8, duration: 0.8 }}
-              className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 md:gap-4 mb-8 md:mb-10"
+              transition={{ delay: 0.65, duration: 0.5 }}
+              className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-2.5 mb-7"
             >
-              <motion.a
-                href="#projects"
-                className="w-full sm:w-auto px-6 py-3 md:px-8 md:py-4 bg-gradient-to-r from-primary to-secondary rounded-full text-white text-sm md:text-base font-semibold flex items-center justify-center gap-2 glow-hover relative overflow-hidden group"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+              <motion.a 
+                href="#projects" 
+                whileHover={{ scale: 1.03 }} 
+                whileTap={{ scale: 0.97 }}
+                className="w-full sm:w-auto px-6 py-2.5 rounded-xl text-white text-sm font-semibold flex items-center justify-center gap-2 bg-gradient-to-r from-violet-500 to-cyan-500 hover:shadow-lg hover:shadow-violet-500/20 transition-shadow"
               >
-                <span className="relative z-10">View My Work</span>
+                View My Work <ArrowRight size={14} />
               </motion.a>
-              <motion.a
-                href="#contact"
-                className="w-full sm:w-auto px-6 py-3 md:px-8 md:py-4 border border-white/20 rounded-full text-white text-sm md:text-base font-semibold hover:bg-white/5 transition-all text-center"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+              <motion.a 
+                href="#contact" 
+                whileHover={{ scale: 1.03 }} 
+                whileTap={{ scale: 0.97 }}
+                className="w-full sm:w-auto px-6 py-2.5 rounded-xl text-sm font-medium text-gray-300 border border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.04] hover:text-white transition-all text-center"
               >
                 Contact Me
               </motion.a>
+              {onDownload && (
+                <motion.button 
+                  onClick={onDownload}
+                  whileHover={{ scale: 1.03 }} 
+                  whileTap={{ scale: 0.97 }}
+                  className="w-full sm:w-auto px-6 py-2.5 rounded-xl text-sm font-medium text-gray-300 border border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.04] hover:text-white transition-all flex items-center justify-center gap-2"
+                >
+                  <Download size={14} /> Resume
+                </motion.button>
+              )}
             </motion.div>
 
             {/* Social Links */}
-            <motion.div
+            <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 2, duration: 0.8 }}
-              className="flex items-center justify-center lg:justify-start gap-3 md:gap-4"
+              transition={{ delay: 0.8, duration: 0.5 }}
+              className="flex items-center justify-center lg:justify-start gap-2"
             >
-              <span className="text-xs md:text-sm text-gray-500 mr-1 md:mr-2">Follow:</span>
-              {[
-                { icon: Github, href: 'https://github.com/ashishpatel0856', label: 'GitHub' },
-                { icon: Linkedin, href: 'https://www.linkedin.com/in/ashish-patel-28a572304', label: 'LinkedIn' },
-                { icon: Mail, href: 'mailto:ashishkumarr0856@gmail.com', label: 'Email' },
-                { icon: Phone, href: 'tel:+919129900856', label: 'Phone' },
-              ].map((social, index) => (
-                <motion.a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
+              {socials.map((social, i) => (
+                <motion.a 
+                  key={social.label} 
+                  href={social.href} 
+                  target="_blank" 
                   rel="noopener noreferrer"
-                  className="p-2.5 md:p-3 rounded-full bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:bg-primary/20 hover:border-primary/50 transition-all"
-                  whileHover={{ scale: 1.2, y: -3 }}
-                  whileTap={{ scale: 0.9 }}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 2.2 + index * 0.1 }}
+                  className="w-9 h-9 rounded-xl border border-white/[0.06] bg-white/[0.02] text-gray-500 hover:text-white hover:border-violet-500/25 hover:bg-violet-500/10 transition-all duration-300 flex items-center justify-center"
+                  whileHover={{ scale: 1.1, y: -2 }} 
+                  whileTap={{ scale: 0.95 }}
+                  initial={{ opacity: 0, y: 8 }} 
+                  animate={{ opacity: 1, y: 0 }} 
+                  transition={{ delay: 0.9 + i * 0.06 }}
                 >
-                  <social.icon size={18} className="md:w-5 md:h-5" />
+                  <social.icon size={15} />
                 </motion.a>
               ))}
             </motion.div>
-          </motion.div>
+          </div>
 
-          {/* Right Content - Photo */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
+          {/* ===== RIGHT: PROFILE PHOTO ===== */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.4, type: "spring" }}
-            className="flex justify-center w-full"
+            transition={{ duration: 0.7, delay: 0.3, type: 'spring', stiffness: 100 }}
+            className="flex-shrink-0 order-1 lg:order-2"
           >
-            <div className="relative">
-              {/* Animated Rings - Hidden on small mobile */}
-              <motion.div
-                className="absolute inset-0 rounded-full border-2 border-primary/30 hidden sm:block"
-                animate={{ 
-                  scale: [1, 1.1, 1],
-                  opacity: [0.5, 0.2, 0.5],
-                  rotate: [0, 180, 360]
-                }}
-                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-                style={{ width: '120%', height: '120%', top: '-10%', left: '-10%' }}
-              />
-              <motion.div
-                className="absolute inset-0 rounded-full border-2 border-secondary/30 hidden sm:block"
-                animate={{ 
-                  scale: [1.1, 1, 1.1],
-                  opacity: [0.3, 0.6, 0.3],
-                  rotate: [360, 180, 0]
-                }}
-                transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
-                style={{ width: '140%', height: '140%', top: '-20%', left: '-20%' }}
-              />
-              
-              {/* Glow Effect */}
-              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary/20 to-secondary/20 blur-2xl scale-110" />
-              
-              {/* Photo Container */}
-              <motion.div
-                className="relative w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-80 lg:h-80 rounded-full overflow-hidden border-4 border-white/10 shadow-2xl mx-auto"
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.3 }}
+            <motion.div 
+              className="relative"
+              animate={{ y: [0, -5, 0] }}
+              transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+            >
+              {/* Outer Glow */}
+              <div className="absolute inset-0 rounded-full blur-2xl opacity-25 scale-110 bg-gradient-to-r from-violet-500 to-cyan-500" />
+
+              {/* Rotating Gradient Ring */}
+              <motion.div 
+                className="absolute -inset-[2px] rounded-full p-[2px]"
+                style={{ background: 'conic-gradient(from 0deg, #8b5cf6, #06b6d4, #8b5cf6)' }}
+                animate={{ rotate: 360 }}
+                transition={{ duration: 12, repeat: Infinity, ease: 'linear' }}
               >
-                <img
-                  src={PHOTO_URL}
-                  alt="Ashish Kumar"
-                  className="w-full h-full object-cover object-top"
-                  style={{ objectPosition: 'center 15%' }}
-                  onError={(e) => {
-                    e.target.onerror = null
-                    e.target.src = FALLBACK_IMAGE
-                  }}
-                />
-                
-                {/* Overlay Gradient */}
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
+                <div className="w-full h-full rounded-full bg-[#08080c]" />
               </motion.div>
 
-              {/* Floating Badge - Only Available for Work */}
-              <motion.div
-                className="absolute -bottom-2 -right-2 md:-bottom-4 md:-right-4 px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-card border border-white/10 shadow-lg"
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 1.5, type: "spring" }}
-                whileHover={{ scale: 1.1 }}
-              >
-                <span className="text-xs md:text-sm font-semibold text-primary">Available for Work</span>
-              </motion.div>
-            </div>
+              {/* Photo Container */}
+              <div className="relative w-48 h-48 sm:w-56 sm:h-56 lg:w-64 lg:h-64 rounded-full overflow-hidden">
+                {/* Loading skeleton */}
+                {!imgLoaded && !imgError && (
+                  <div className="absolute inset-0 bg-white/[0.03] animate-pulse rounded-full" />
+                )}
+
+                <img
+                  src={imgError ? FALLBACK_IMAGE : PHOTO_URL}
+                  alt="Ashish Kumar"
+                  className={`w-full h-full object-cover object-top transition-opacity duration-500 ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
+                  style={{ objectPosition: 'center 15%' }}
+                  onLoad={() => setImgLoaded(true)}
+                  onError={() => { setImgError(true); setImgLoaded(true); }}
+                />
+
+                {/* Hover Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-violet-900/30 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
+              </div>
+
+             
+            </motion.div>
           </motion.div>
         </div>
 
@@ -250,13 +322,24 @@ const Hero = () => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 2.5, duration: 0.8 }}
-          className="absolute bottom-4 md:bottom-8 left-1/2 transform -translate-x-1/2 hidden md:flex flex-col items-center gap-2"
+          transition={{ delay: 1.2 }}
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1"
         >
-          <span className="text-xs text-gray-500">Scroll</span>
-          <ChevronDown size={20} className="text-gray-500" />
+          <span className="text-[10px] text-gray-700">Scroll</span>
+          <motion.div animate={{ y: [0, 4, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
+            <ChevronDown size={14} className="text-gray-700" />
+          </motion.div>
         </motion.div>
       </div>
+
+      {/* Gradient Animation Keyframes */}
+      <style>{`
+        @keyframes gradientShift {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+      `}</style>
     </section>
   )
 }

@@ -30,20 +30,20 @@ function App() {
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50)
-      
+
       const sections = ['home', 'about', 'skills', 'projects', 'education', 'coding', 'certifications', 'contact']
       for (const section of sections) {
         const element = document.getElementById(section)
         if (element) {
           const rect = element.getBoundingClientRect()
-          if (rect.top <= 100 && rect.bottom >= 100) {
+          if (rect.top <= 120 && rect.bottom >= 120) {
             setActiveSection(section)
             break
           }
         }
       }
     }
-    
+
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
@@ -57,7 +57,7 @@ function App() {
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)
-    
+
     setTimeout(() => {
       window.open(RESUME_DRIVE_LINK, '_blank')
     }, 1000)
@@ -65,12 +65,9 @@ function App() {
 
   const handleNavClick = (href) => {
     setIsMenuOpen(false)
-    
-    // Small delay for mobile menu to close
     setTimeout(() => {
       const targetId = href.replace('#', '')
       const element = document.getElementById(targetId)
-      
       if (element) {
         element.scrollIntoView({ behavior: 'smooth', block: 'start' })
       }
@@ -84,49 +81,41 @@ function App() {
     { name: 'Projects', href: '#projects' },
     { name: 'Education', href: '#education' },
     { name: 'Coding', href: '#coding' },
-    { name: 'Certifications', href: '#certifications' },
+    { name: 'Certs', href: '#certifications' },
     { name: 'Contact', href: '#contact' },
   ]
 
-  // Close menu on resize to desktop
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 768) {
-        setIsMenuOpen(false)
-      }
-    }
+    const handleResize = () => { if (window.innerWidth >= 768) setIsMenuOpen(false) }
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
   return (
-    <div className="min-h-screen bg-darker text-gray-100 overflow-x-hidden">
+    <div className="min-h-screen bg-[#08080c] text-gray-100 overflow-x-hidden selection:bg-violet-500/30 selection:text-white">
       {/* Navigation */}
-      <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled ? 'bg-darker/90 backdrop-blur-lg border-b border-white/10' : 'bg-transparent'
-        }`}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled ? 'bg-[#08080c]/85 backdrop-blur-xl border-b border-white/[0.06]' : 'bg-transparent'
+      }`}>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-14">
             {/* Logo */}
-            <button
-              onClick={() => handleNavClick('#home')}
-              className="text-2xl font-bold text-gradient hover:scale-105 transition-transform"
-            >
-              Ashish Kumar
+            <button onClick={() => handleNavClick('#home')} className="text-lg font-bold group">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-400 to-cyan-400 group-hover:from-cyan-400 group-hover:to-violet-400 transition-all duration-500">
+                Ashish.
+              </span>
             </button>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-1">
+            <div className="hidden md:flex items-center gap-1">
               {navLinks.map((link) => (
                 <button
                   key={link.name}
                   onClick={() => handleNavClick(link.href)}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
                     activeSection === link.href.slice(1)
-                      ? 'text-primary bg-primary/10'
-                      : 'text-gray-400 hover:text-white hover:bg-white/5'
+                      ? 'text-white bg-white/[0.08]'
+                      : 'text-gray-500 hover:text-gray-300 hover:bg-white/[0.04]'
                   }`}
                 >
                   {link.name}
@@ -134,9 +123,9 @@ function App() {
               ))}
               <button
                 onClick={handleResumeDownload}
-                className="ml-4 px-4 py-2 bg-gradient-to-r from-primary to-secondary rounded-lg text-sm font-medium flex items-center gap-2 hover:shadow-lg hover:shadow-primary/25 transition-all"
+                className="ml-3 px-4 py-1.5 bg-gradient-to-r from-violet-500 to-cyan-500 rounded-lg text-xs font-semibold text-white flex items-center gap-1.5 hover:shadow-lg hover:shadow-violet-500/20 transition-all"
               >
-                <Download size={16} />
+                <Download size={13} />
                 Resume
               </button>
             </div>
@@ -144,10 +133,9 @@ function App() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden p-2 rounded-lg bg-white/5 text-gray-300 hover:bg-white/10 transition-colors"
-              aria-label="Toggle menu"
+              className="md:hidden p-2 rounded-lg bg-white/[0.04] border border-white/[0.06] text-gray-400 hover:text-white transition-colors"
             >
-              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              {isMenuOpen ? <X size={18} /> : <Menu size={18} />}
             </button>
           </div>
         </div>
@@ -159,37 +147,34 @@ function App() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.2 }}
-              className="md:hidden bg-darker/95 backdrop-blur-lg border-b border-white/10"
+              transition={{ duration: 0.25 }}
+              className="md:hidden bg-[#08080c]/95 backdrop-blur-xl border-b border-white/[0.06] overflow-hidden"
             >
-              <div className="px-4 py-4 space-y-1">
+              <div className="px-4 py-3 space-y-0.5">
                 {navLinks.map((link, index) => (
                   <motion.button
                     key={link.name}
-                    initial={{ opacity: 0, x: -20 }}
+                    initial={{ opacity: 0, x: -12 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.05 }}
+                    transition={{ delay: index * 0.04 }}
                     onClick={() => handleNavClick(link.href)}
-                    className={`w-full text-left px-4 py-3 rounded-lg text-base font-medium transition-all ${
+                    className={`w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
                       activeSection === link.href.slice(1)
-                        ? 'text-primary bg-primary/10'
-                        : 'text-gray-400 hover:text-white hover:bg-white/5'
+                        ? 'text-white bg-white/[0.06]'
+                        : 'text-gray-500 hover:text-gray-300 hover:bg-white/[0.04]'
                     }`}
                   >
                     {link.name}
                   </motion.button>
                 ))}
                 <motion.button
-                  initial={{ opacity: 0, x: -20 }}
+                  initial={{ opacity: 0, x: -12 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: navLinks.length * 0.05 }}
-                  onClick={() => {
-                    setIsMenuOpen(false)
-                    handleResumeDownload()
-                  }}
-                  className="w-full flex items-center justify-center gap-2 px-4 py-3 mt-3 bg-gradient-to-r from-primary to-secondary rounded-lg text-white font-medium"
+                  transition={{ delay: navLinks.length * 0.04 }}
+                  onClick={() => { setIsMenuOpen(false); handleResumeDownload() }}
+                  className="w-full flex items-center justify-center gap-2 px-3 py-2.5 mt-2 bg-gradient-to-r from-violet-500 to-cyan-500 rounded-lg text-white text-sm font-semibold"
                 >
-                  <Download size={18} />
+                  <Download size={15} />
                   Download Resume
                 </motion.button>
               </div>
@@ -211,10 +196,13 @@ function App() {
       </main>
 
       {/* Footer */}
-      <footer className="py-8 border-t border-white/10 bg-darker">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-gray-400">
-            © 2024 Ashish Kumar. Built with React, Vite & Tailwind CSS
+      <footer className="py-6 border-t border-white/[0.06] bg-[#08080c]">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-2">
+          <p className="text-gray-600 text-xs">
+            © 2024 Ashish Kumar. All rights reserved.
+          </p>
+          <p className="text-gray-700 text-xs">
+            Built with React, Vite & Tailwind CSS
           </p>
         </div>
       </footer>

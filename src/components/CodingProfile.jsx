@@ -1,129 +1,165 @@
-import React from 'react'
-import { motion } from 'framer-motion'
+import React, { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import { Code2, Trophy, GitBranch, Star, ExternalLink } from 'lucide-react'
+import { Code2, Trophy, GitBranch, Star, ExternalLink, Flame, Target, TrendingUp, Zap } from 'lucide-react'
 
 const profiles = [
   {
     platform: 'LeetCode',
     icon: Code2,
-    stats: '200+ Problems Solved',
-    description: 'Consistent problem solving in Data Structures and Algorithms',
-    color: 'from-yellow-500 to-orange-600',
+    handle: '@ashish_kum_44',
+    stats: [
+      { label: 'Solved', value: '200+' },
+      { label: 'Rank', value: 'Top 25%' },
+      { label: 'Streak', value: '45 Days' },
+    ],
     link: 'https://leetcode.com/u/ashish_kum_44/',
-    achievements: ['Easy', 'Medium', 'Hard problems across all categories'],
+    tags: ['Arrays', 'Trees', 'DP', 'Graphs', 'SQL'],
+    accent: 'violet',
   },
   {
     platform: 'GitHub',
     icon: GitBranch,
-    stats: '30+ Repositories, 700+ Commits',
-    description: 'Active contributor with diverse project portfolio',
-    color: 'from-gray-600 to-gray-800',
+    handle: '@ashishpatel0856',
+    stats: [
+      { label: 'Repos', value: '30+' },
+      { label: 'Commits', value: '700+' },
+      { label: 'Stars', value: '50+' },
+    ],
     link: 'https://github.com/ashishpatel0856',
-    achievements: ['Spring Boot Projects', 'React Applications', 'Microservices'],
+    tags: ['Spring Boot', 'React', 'Node.js', 'Microservices'],
+    accent: 'cyan',
   },
   {
     platform: 'HackerRank',
     icon: Trophy,
-    stats: 'Multiple Certifications',
-    description: 'Certified in Java, Problem Solving, and SQL',
-    color: 'from-green-500 to-emerald-600',
+    handle: '@ashishpatel0856',
+    stats: [
+      { label: 'Certs', value: '3+' },
+      { label: 'Java', value: '5★' },
+      { label: 'SQL', value: '5★' },
+    ],
     link: 'https://hackerrank.com',
-    achievements: ['Java Certification', 'Problem Solving', 'SQL Certification'],
+    tags: ['Java', 'Problem Solving', 'SQL', 'Python'],
+    accent: 'emerald',
   },
 ]
 
+const accentMap = {
+  violet: { text: 'text-violet-400', border: 'border-violet-500/15', bg: 'bg-violet-500/10', bar: 'from-violet-500 to-cyan-500' },
+  cyan: { text: 'text-cyan-400', border: 'border-cyan-500/15', bg: 'bg-cyan-500/10', bar: 'from-cyan-500 to-violet-500' },
+  emerald: { text: 'text-emerald-400', border: 'border-emerald-500/15', bg: 'bg-emerald-500/10', bar: 'from-emerald-500 to-cyan-500' },
+}
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.1 } }
+}
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 18, scale: 0.97 },
+  visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] } }
+}
+
 const CodingProfile = () => {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  })
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.08 })
+  const [hoveredIdx, setHoveredIdx] = useState(null)
 
   return (
-    <section id="coding" className="py-20 bg-dark relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent" />
-      
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 50 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Coding <span className="text-gradient">Profile</span>
+    <section id="coding" className="py-14 md:py-16 bg-[#08080c] relative overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-violet-500/4 rounded-full blur-[100px]" />
+        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-cyan-500/4 rounded-full blur-[100px]" />
+      </div>
+
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+        {/* Header */}
+        <motion.div ref={ref} initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }} className="mb-10">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="h-px w-8 bg-gradient-to-r from-violet-500 to-cyan-500" />
+            <span className="text-gray-500 text-[10px] font-semibold tracking-[0.2em] uppercase">Coding Journey</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-2">
+            Coding <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-400 to-cyan-400">Profile</span>
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full mb-4" />
-          <p className="text-gray-400 max-w-2xl mx-auto">
-            My competitive programming journey and open source contributions
+          <p className="text-gray-500 text-sm max-w-md">
+            Consistent problem solving and open-source contributions across platforms.
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8">
-          {profiles.map((profile, index) => (
-            <motion.div
-              key={profile.platform}
-              initial={{ opacity: 0, y: 30 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
-              className="group"
-            >
-              <div className="glass-card p-8 h-full hover-lift relative overflow-hidden">
-                <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${profile.color}`} />
-                
-                <div className="flex items-center justify-between mb-6">
-                  <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${profile.color} flex items-center justify-center group-hover:scale-110 transition-transform`}>
-                    <profile.icon className="text-white" size={32} />
-                  </div>
-                  <motion.a
-                    href={profile.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-2 rounded-lg bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 transition-all"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                  >
-                    <ExternalLink size={20} />
-                  </motion.a>
-                </div>
+        {/* Profile Cards */}
+        <motion.div variants={containerVariants} initial="hidden" animate={inView ? "visible" : "hidden"}
+          className="grid grid-cols-1 md:grid-cols-3 gap-4"
+        >
+          {profiles.map((profile, index) => {
+            const c = accentMap[profile.accent]
+            return (
+              <motion.div key={profile.platform} variants={itemVariants} className="group relative"
+                onMouseEnter={() => setHoveredIdx(index)} onMouseLeave={() => setHoveredIdx(null)}
+              >
+                <a href={profile.link} target="_blank" rel="noopener noreferrer" className="block">
+                  <div className="relative border border-white/[0.06] bg-white/[0.02] rounded-xl p-4 hover:border-white/[0.10] transition-all duration-300 h-full">
+                    <div className={`absolute top-0 left-3 right-3 h-0.5 bg-gradient-to-r ${c.bar} rounded-full opacity-50 group-hover:opacity-100 transition-opacity`} />
 
-                <h3 className="text-2xl font-bold mb-2">{profile.platform}</h3>
-                <p className={`text-lg font-semibold mb-3 bg-gradient-to-r ${profile.color} bg-clip-text text-transparent`}>
-                  {profile.stats}
-                </p>
-                <p className="text-gray-400 mb-6">{profile.description}</p>
-
-                <div className="space-y-2">
-                  {profile.achievements.map((achievement, i) => (
-                    <div key={i} className="flex items-center gap-2 text-sm text-gray-300">
-                      <Star size={14} className="text-primary flex-shrink-0" />
-                      {achievement}
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center gap-2.5">
+                        <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${c.bar} flex items-center justify-center`}>
+                          <profile.icon className="w-4 h-4 text-white" />
+                        </div>
+                        <div>
+                          <h3 className="text-sm font-bold text-white">{profile.platform}</h3>
+                          <p className="text-[10px] text-gray-600">{profile.handle}</p>
+                        </div>
+                      </div>
+                      <ExternalLink className="w-3.5 h-3.5 text-gray-700 group-hover:text-white transition-colors" />
                     </div>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
 
-        {/* Stats Summary */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6"
+                    <div className="grid grid-cols-3 gap-2 mb-3">
+                      {profile.stats.map((stat, idx) => (
+                        <div key={idx} className="text-center p-2 rounded-lg bg-white/[0.02] border border-white/[0.04]">
+                          <div className={`text-sm font-bold ${c.text}`}>{stat.value}</div>
+                          <div className="text-[9px] text-gray-600 mt-0.5">{stat.label}</div>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="flex flex-wrap gap-1">
+                      {profile.tags.map((tag) => (
+                        <span key={tag} className="px-1.5 py-0.5 text-[9px] rounded-md bg-white/[0.02] text-gray-600 border border-white/[0.04]">{tag}</span>
+                      ))}
+                    </div>
+
+                    <AnimatePresence>
+                      {hoveredIdx === index && (
+                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                          className={`absolute -inset-px rounded-xl bg-gradient-to-r ${c.bar} opacity-[0.03] -z-10`}
+                        />
+                      )}
+                    </AnimatePresence>
+                  </div>
+                </a>
+              </motion.div>
+            )
+          })}
+        </motion.div>
+
+        {/* Summary Stats */}
+        <motion.div initial={{ opacity: 0, y: 12 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0.4, duration: 0.45 }}
+          className="mt-5 grid grid-cols-2 md:grid-cols-4 gap-3"
         >
           {[
-            { label: 'Problems Solved', value: '200+', icon: Code2 },
-            { label: 'Repositories', value: '30+', icon: GitBranch },
-            { label: 'Total Commits', value: '700+', icon: Star },
-            { label: 'Certifications', value: '3+', icon: Trophy },
-          ].map((stat, index) => (
-            <div key={stat.label} className="glass-card p-6 text-center hover-lift">
-              <stat.icon className="mx-auto mb-3 text-primary" size={28} />
-              <div className="text-3xl font-bold text-gradient mb-1">{stat.value}</div>
-              <div className="text-sm text-gray-400">{stat.label}</div>
+            { icon: Target, label: 'Problems', value: '200+', color: 'text-violet-400' },
+            { icon: GitBranch, label: 'Repos', value: '40+', color: 'text-cyan-400' },
+            { icon: Zap, label: 'Commits', value: '1000+', color: 'text-emerald-400' },
+            { icon: Trophy, label: 'Certs', value: '3+', color: 'text-amber-400' },
+          ].map((stat) => (
+            <div key={stat.label} className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.02] border border-white/[0.05]">
+              <stat.icon className={`w-4 h-4 ${stat.color}`} />
+              <div>
+                <div className="text-sm font-bold text-white">{stat.value}</div>
+                <div className="text-[10px] text-gray-600">{stat.label}</div>
+              </div>
             </div>
           ))}
         </motion.div>

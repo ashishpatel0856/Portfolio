@@ -1,15 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import { Mail, Phone, MapPin, Github, Linkedin, Twitter, Instagram, Copy, Check, ArrowUpRight, MessageSquare } from 'lucide-react'
+import { Mail, Phone, MapPin, Github, Linkedin, Twitter, Instagram, Copy, Check, ArrowUpRight, Send } from 'lucide-react'
 
 const Contact = () => {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  })
-
-  const [copied, setCopied] = React.useState(null)
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 })
+  const [copied, setCopied] = useState(null)
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' })
+  const [focusedField, setFocusedField] = useState(null)
 
   const handleCopy = (text, label) => {
     navigator.clipboard.writeText(text)
@@ -17,185 +15,156 @@ const Contact = () => {
     setTimeout(() => setCopied(null), 2000)
   }
 
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    window.location.href = `mailto:ashishkumarr0856@gmail.com?subject=Portfolio Contact from ${formData.name}&body=${formData.message}`
+  }
+
   const contacts = [
-    {
-      icon: Mail,
-      label: 'Email',
-      value: 'ashishkumarr0856@gmail.com',
-      href: 'mailto:ashishkumarr0856@gmail.com',
-      color: 'from-red-500 to-pink-600',
-      textColor: 'text-red-400',
-    },
-    {
-      icon: Phone,
-      label: 'Phone',
-      value: '+91-9129900856',
-      href: 'tel:+919129900856',
-      color: 'from-green-500 to-emerald-600',
-      textColor: 'text-green-400',
-    },
-    {
-      icon: MapPin,
-      label: 'Location',
-      value: 'Ghaziabad, India',
-      href: 'https://maps.google.com/?q=Ghaziabad,India',
-      color: 'from-blue-500 to-cyan-600',
-      textColor: 'text-blue-400',
-      external: true,
-    },
+    { icon: Mail, label: 'Email', value: 'ashishkumarr0856@gmail.com', href: 'mailto:ashishkumarr0856@gmail.com', color: 'text-rose-400', bg: 'from-rose-500/10 to-pink-500/10', border: 'border-rose-500/10' },
+    { icon: Phone, label: 'Phone', value: '+91-9129900856', href: 'tel:+919129900856', color: 'text-emerald-400', bg: 'from-emerald-500/10 to-teal-500/10', border: 'border-emerald-500/10' },
+    { icon: MapPin, label: 'Location', value: 'Ghaziabad, India', href: 'https://maps.google.com/?q=Ghaziabad,India', color: 'text-sky-400', bg: 'from-sky-500/10 to-cyan-500/10', border: 'border-sky-500/10', external: true },
   ]
 
   const socials = [
-    { icon: Github, href: 'https://github.com/ashishpatel0856', label: 'GitHub', color: 'hover:text-white' },
-    { icon: Linkedin, href: 'https://www.linkedin.com/in/ashish-patel-28a572304', label: 'LinkedIn', color: 'hover:text-blue-400' },
-    { icon: Instagram, href: 'https://www.instagram.com/ashish_patel_9229/', label: 'Instagram', color: 'hover:text-pink-400' },
-    { icon: Twitter, href: 'https://x.com/kumar_ashi29343', label: 'Twitter', color: 'hover:text-sky-400' },
+    { icon: Github, href: 'https://github.com/ashishpatel0856', label: 'GitHub', hoverColor: 'hover:text-white hover:border-white/15 hover:shadow-white/5' },
+    { icon: Linkedin, href: 'https://www.linkedin.com/in/ashish-patel-28a572304', label: 'LinkedIn', hoverColor: 'hover:text-blue-400 hover:border-blue-400/20 hover:shadow-blue-400/10' },
+    { icon: Instagram, href: 'https://www.instagram.com/ashish_patel_9229/', label: 'Instagram', hoverColor: 'hover:text-pink-400 hover:border-pink-400/20 hover:shadow-pink-400/10' },
+    { icon: Twitter, href: 'https://x.com/kumar_ashi29343', label: 'Twitter', hoverColor: 'hover:text-sky-400 hover:border-sky-400/20 hover:shadow-sky-400/10' },
   ]
 
+  const container = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { staggerChildren: 0.07 } }
+  }
+
+  const item = {
+    hidden: { opacity: 0, y: 16 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] } }
+  }
+
   return (
-    <section id="contact" className="py-16 bg-dark relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-primary/5 via-transparent to-transparent" />
-      
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <section id="contact" className="py-14 md:py-16 bg-[#08080c] relative overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute bottom-0 left-1/4 w-72 h-72 bg-violet-500/4 rounded-full blur-[100px]" />
+        <div className="absolute top-0 right-1/3 w-64 h-64 bg-cyan-500/4 rounded-full blur-[100px]" />
+      </div>
+
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10" ref={ref}>
+
         {/* Header */}
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
-        >
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={inView ? { scale: 1 } : {}}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-medium mb-4"
-          >
-            <MessageSquare size={14} />
-            Contact
+        <motion.div variants={container} initial="hidden" animate={inView ? "visible" : "hidden"} className="mb-10">
+          <motion.div variants={item} className="flex items-center gap-3 mb-3">
+            <div className="h-px w-8 bg-gradient-to-r from-violet-500 to-cyan-500" />
+            <span className="text-gray-500 text-[10px] font-semibold tracking-[0.2em] uppercase">Get In Touch</span>
           </motion.div>
-          
-          <h2 className="text-3xl md:text-4xl font-bold mb-3">
-            Let's Work <span className="text-gradient">Together</span>
-          </h2>
-          <p className="text-gray-400 text-sm max-w-md mx-auto">
+          <motion.h2 variants={item} className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-2">
+            Let's Work <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-400 to-cyan-400">Together</span>
+          </motion.h2>
+          <motion.p variants={item} className="text-gray-500 text-sm max-w-md">
             Have a project in mind? I'm open for freelance work and collaborations.
-          </p>
+          </motion.p>
         </motion.div>
 
-        {/* Main Card */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="glass-card rounded-2xl p-6 md:p-8"
-        >
-          {/* Contact Grid */}
-          <div className="grid md:grid-cols-3 gap-4 mb-8">
-            {contacts.map((item, index) => (
-              <motion.a
-                key={item.label}
-                href={item.href}
-                target={item.external ? '_blank' : undefined}
-                rel={item.external ? 'noopener noreferrer' : undefined}
-                initial={{ opacity: 0, y: 20 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
-                className="group relative p-4 rounded-xl bg-white/5 border border-white/10 hover:border-primary/30 hover:bg-white/10 transition-all"
+        <div className="grid lg:grid-cols-5 gap-5">
+
+          {/* Left: Contact Info + Social */}
+          <motion.div className="lg:col-span-2 space-y-3" variants={container} initial="hidden" animate={inView ? "visible" : "hidden"}>
+
+            {contacts.map((item_data) => (
+              <motion.a key={item_data.label} href={item_data.href} target={item_data.external ? '_blank' : undefined}
+                rel={item_data.external ? 'noopener noreferrer' : undefined} variants={item}
+                className="flex items-center gap-3 p-3.5 rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.10] transition-all duration-300 group"
               >
-                <div className="flex items-start justify-between mb-3">
-                  <div className={`p-2 rounded-lg bg-gradient-to-br ${item.color} bg-opacity-20`}>
-                    <item.icon size={18} className="text-white" />
-                  </div>
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault()
-                      e.stopPropagation()
-                      handleCopy(item.value, item.label)
-                    }}
-                    className="p-1.5 rounded-md bg-white/5 text-gray-400 hover:text-white opacity-0 group-hover:opacity-100 transition-all"
-                  >
-                    {copied === item.label ? <Check size={14} className="text-green-400" /> : <Copy size={14} />}
-                  </button>
+                <div className={`w-9 h-9 rounded-lg bg-gradient-to-br ${item_data.bg} ${item_data.border} border flex items-center justify-center flex-shrink-0`}>
+                  <item_data.icon className={`w-4 h-4 ${item_data.color}`} />
                 </div>
-                <p className="text-xs text-gray-500 mb-1">{item.label}</p>
-                <p className={`text-sm font-semibold ${item.textColor} truncate`}>
-                  {item.value}
-                </p>
+                <div className="flex-1 min-w-0">
+                  <p className="text-[10px] text-gray-600 uppercase tracking-wider">{item_data.label}</p>
+                  <p className="text-sm text-white font-medium truncate">{item_data.value}</p>
+                </div>
+                <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleCopy(item_data.value, item_data.label); }}
+                  className="p-1.5 rounded-md bg-white/[0.03] text-gray-600 hover:text-white opacity-0 group-hover:opacity-100 transition-all"
+                >
+                  {copied === item_data.label ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
+                </button>
+                <ArrowUpRight className="w-3.5 h-3.5 text-gray-700 group-hover:text-violet-400 transition-colors" />
               </motion.a>
             ))}
-          </div>
 
-          {/* Divider */}
-          <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mb-6" />
-
-          {/* Bottom Section */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
             {/* Social Links */}
-            <div className="flex items-center gap-3">
-              <span className="text-xs text-gray-500">Follow:</span>
+            <motion.div variants={item} className="pt-1">
+              <p className="text-[10px] text-gray-600 uppercase tracking-wider mb-2.5">Follow Me</p>
               <div className="flex gap-2">
-                {socials.map((social, index) => (
-                  <motion.a
-                    key={social.label}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={inView ? { opacity: 1, scale: 1 } : {}}
-                    transition={{ duration: 0.3, delay: 0.5 + index * 0.1 }}
-                    whileHover={{ scale: 1.1, y: -2 }}
-                    className={`p-2.5 rounded-lg bg-white/5 text-gray-400 ${social.color} hover:bg-white/10 transition-all border border-white/5`}
+                {socials.map((social) => (
+                  <motion.a key={social.label} href={social.href} target="_blank" rel="noopener noreferrer"
+                    whileHover={{ scale: 1.1, y: -2 }} whileTap={{ scale: 0.95 }}
+                    className={`w-9 h-9 rounded-xl border border-white/[0.06] bg-white/[0.02] text-gray-500 flex items-center justify-center transition-all duration-300 ${social.hoverColor}`}
                     title={social.label}
                   >
-                    <social.icon size={18} />
+                    <social.icon className="w-4 h-4" />
                   </motion.a>
                 ))}
               </div>
-            </div>
+            </motion.div>
 
-            {/* Status & CTA */}
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                </span>
-                <span className="text-xs font-medium text-emerald-400">Available</span>
+            {/* Availability Badge */}
+            <motion.div variants={item} className="flex items-center gap-2 px-3.5 py-2.5 rounded-xl border border-emerald-500/10 bg-emerald-500/5">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+              </span>
+              <span className="text-xs text-emerald-400 font-medium">Available for new projects</span>
+            </motion.div>
+          </motion.div>
+
+          {/* Right: Contact Form */}
+          <motion.div className="lg:col-span-3" variants={container} initial="hidden" animate={inView ? "visible" : "hidden"}>
+            <motion.form variants={item} onSubmit={handleSubmit}
+              className="p-5 sm:p-6 rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm"
+            >
+              <div className="grid sm:grid-cols-2 gap-3 mb-3">
+                {[
+                  { id: 'name', type: 'text', label: 'Name', placeholder: 'Your name' },
+                  { id: 'email', type: 'email', label: 'Email', placeholder: 'your@email.com' },
+                ].map((field) => (
+                  <div key={field.id}>
+                    <label className="text-[10px] text-gray-600 uppercase tracking-wider mb-1.5 block">{field.label}</label>
+                    <input
+                      type={field.type}
+                      required
+                      value={formData[field.id]}
+                      onChange={(e) => setFormData({...formData, [field.id]: e.target.value})}
+                      onFocus={() => setFocusedField(field.id)} onBlur={() => setFocusedField(null)}
+                      className={`w-full px-3.5 py-2.5 rounded-xl bg-white/[0.02] border text-white text-sm placeholder-gray-700 focus:outline-none transition-all duration-300 ${
+                        focusedField === field.id ? 'border-violet-500/30 bg-white/[0.04]' : 'border-white/[0.06]'
+                      }`}
+                      placeholder={field.placeholder}
+                    />
+                  </div>
+                ))}
               </div>
-              
-              <motion.a
-                href="mailto:ashishkumarr0856@gmail.com"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-white text-sm font-medium hover:bg-primary/90 transition-all"
+              <div className="mb-4">
+                <label className="text-[10px] text-gray-600 uppercase tracking-wider mb-1.5 block">Message</label>
+                <textarea
+                  required rows={4}
+                  value={formData.message}
+                  onChange={(e) => setFormData({...formData, message: e.target.value})}
+                  onFocus={() => setFocusedField('message')} onBlur={() => setFocusedField(null)}
+                  className={`w-full px-3.5 py-2.5 rounded-xl bg-white/[0.02] border text-white text-sm placeholder-gray-700 focus:outline-none transition-all duration-300 resize-none ${
+                    focusedField === 'message' ? 'border-violet-500/30 bg-white/[0.04]' : 'border-white/[0.06]'
+                  }`}
+                  placeholder="Tell me about your project..."
+                />
+              </div>
+              <motion.button type="submit" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
+                className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-gradient-to-r from-violet-500 to-cyan-500 text-white text-sm font-semibold flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-violet-500/20 transition-shadow"
               >
-                Hire Me
-                <ArrowUpRight size={16} />
-              </motion.a>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Quick Stats */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.4, delay: 0.6 }}
-          className="mt-6 grid grid-cols-3 gap-4 text-center"
-        >
-          {[
-            { label: 'Response Time', value: '< 24h' },
-            // { label: 'Experience', value: '2+ Years' },
-            { label: 'Projects', value: '5+' },
-          ].map((stat, index) => (
-            <div key={stat.label} className="p-3 rounded-xl bg-white/5 border border-white/5">
-              <p className="text-lg font-bold text-gradient">{stat.value}</p>
-              <p className="text-xs text-gray-500">{stat.label}</p>
-            </div>
-          ))}
-        </motion.div>
+                <Send className="w-4 h-4" /> Send Message
+              </motion.button>
+            </motion.form>
+          </motion.div>
+        </div>
       </div>
     </section>
   )
