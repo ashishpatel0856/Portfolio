@@ -16,8 +16,8 @@ const About = () => {
 
   const stats = [
     { icon: Trophy, value: '200+', label: 'LeetCode Solved' },
-    { icon: GitBranch, value: '30+', label: 'Repositories' },
-    { icon: Target, value: '700+', label: 'GitHub Commits' },
+    { icon: GitBranch, value: '40+', label: 'Repositories' },
+    { icon: Target, value: '1000+', label: 'GitHub Commits' },
     { icon: GraduationCap, value: '7.86', label: 'CGPA' },
   ]
 
@@ -32,7 +32,7 @@ const About = () => {
   }
 
   return (
-    <section id="about" className="py-14 md:py-16 bg-[#08080c] relative overflow-hidden">
+    <section id="about" className="py-8 md:py-10 relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 right-1/4 w-72 h-72 bg-violet-500/4 rounded-full blur-[100px]" />
         <div className="absolute bottom-0 left-1/3 w-64 h-64 bg-cyan-500/4 rounded-full blur-[100px]" />
@@ -60,35 +60,73 @@ const About = () => {
           <motion.div className="lg:col-span-3 space-y-4" variants={container} initial="hidden" animate={inView ? "visible" : "hidden"}>
 
             {/* Bio Card */}
-            <motion.div variants={item}
-              className="p-5 rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm hover:border-white/[0.10] transition-all duration-300"
+            <motion.div
+              variants={item}
+              className="p-5 sm:p-6 rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm hover:border-white/[0.10] transition-all duration-300"
             >
-              <p className="text-gray-300 text-sm leading-relaxed mb-3">
-                I'm a passionate <span className="text-violet-400 font-medium">Full Stack Developer</span> currently pursuing 
-                B.Tech in Computer Science at <span className="text-white font-medium">Ajay Kumar Garg Engineering College</span> with a CGPA of 7.86/10.
+              <p className="text-gray-300 text-sm sm:text-[15px] leading-[1.7] mb-3">
+                I'm <span className="text-white font-semibold">Ashish Kumar</span>, a
+                <span className="text-violet-400 font-medium"> Final Year B.Tech CSE student</span> at
+                <span className="text-white font-medium"> Ajay Kumar Garg Engineering College</span> (CGPA
+                <span className="text-emerald-400 font-semibold">7.86/10</span>), specializing in building
+                <span className="text-cyan-400 font-medium"> scalable full-stack applications</span>.
               </p>
-              <p className="text-gray-400 text-sm leading-relaxed">
-                With expertise in <span className="text-cyan-400 font-medium">Spring Boot</span>,{' '}
-                <span className="text-violet-400 font-medium">React.js</span>, and modern web technologies, 
-                I build scalable applications that solve real-world problems.
+
+              <p className="text-gray-400 text-sm sm:text-[15px] leading-[1.7] mb-3">
+                My core stack revolves around <span className="text-violet-400 font-medium">Spring Boot</span> &
+                <span className="text-cyan-400 font-medium">React.js</span>, but I'm equally comfortable with the
+                <span className="text-emerald-400 font-medium">MERN stack</span> — from architecting microservices
+                and REST APIs to crafting pixel-perfect, responsive UIs. I love turning complex problems into
+                clean, production-ready code.
+              </p>
+
+              <p className="text-gray-400 text-sm sm:text-[15px] leading-[1.7]">
+                Currently, I'm diving deeper into <span className="text-violet-400 font-medium">System Design</span>,
+                <span className="text-cyan-400 font-medium">Cloud-Native Development</span>, and
+                <span className="text-emerald-400 font-medium">DevOps</span> — because great software isn't just
+                about writing code, it's about building systems that scale.
               </p>
 
               <AnimatePresence>
                 {showMore && (
-                  <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3 }} className="overflow-hidden">
-                    <div className="pt-3 mt-3 border-t border-white/[0.05]">
-                      <p className="text-gray-400 text-sm leading-relaxed">
-                        I have solved <span className="text-violet-400 font-medium">200+ problems on LeetCode</span> and 
-                        contributed to <span className="text-cyan-400 font-medium">30+ repositories on GitHub</span> with 
-                        700+ commits, constantly learning and improving my skills.
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="overflow-hidden"
+                  >
+                    <div className="pt-4 mt-4 border-t border-white/[0.05] space-y-3">
+                      <p className="text-gray-400 text-sm leading-[1.7]">
+                        <span className="text-white font-medium">Problem Solver at Heart:</span> I've cracked
+                        <span className="text-violet-400 font-semibold"> 200+ problems on LeetCode</span>, sharpening
+                        my DSA skills in Arrays, Trees, Dynamic Programming, and Graphs.
+                      </p>
+                      <p className="text-gray-400 text-sm leading-[1.7]">
+                        <span className="text-white font-medium">Open Source Contributor:</span> Active on GitHub with
+                        <span className="text-cyan-400 font-semibold"> 40+ repositories</span> and
+                        <span className="text-emerald-400 font-semibold"> 1000+ commits</span> — from real-time
+                        watch-party apps to ride-hailing platforms and microservices-based food delivery systems.
+                      </p>
+                      <p className="text-gray-400 text-sm leading-[1.7]">
+                        <span className="text-white font-medium">Certified & Curious:</span> Completed advanced
+                        certifications in <span className="text-violet-400 font-medium">Spring Boot & Microservices</span>
+                        from CodingShuttle, with hands-on experience in Docker, Kubernetes, Kafka, and AWS.
                       </p>
                     </div>
                   </motion.div>
                 )}
               </AnimatePresence>
 
-              <button onClick={() => setShowMore(!showMore)} className="mt-3 text-xs text-gray-600 hover:text-gray-400 flex items-center gap-1 transition-colors">
-                {showMore ? <>Less <ChevronUp size={12} /></> : <>Read more <ChevronDown size={12} /></>}
+              <button
+                onClick={() => setShowMore(!showMore)}
+                className="mt-4 text-xs text-gray-500 hover:text-violet-400 flex items-center gap-1 transition-colors font-medium"
+              >
+                {showMore ? (
+                  <>Show Less <ChevronUp size={13} /></>
+                ) : (
+                  <>Read More About Me <ChevronDown size={13} /></>
+                )}
               </button>
             </motion.div>
 

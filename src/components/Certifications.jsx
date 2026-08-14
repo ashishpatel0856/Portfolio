@@ -48,7 +48,7 @@ const Certifications = () => {
   const [hoveredId, setHoveredId] = useState(null)
 
   return (
-    <section id="certifications" className="py-14 md:py-16 bg-[#08080c] relative overflow-hidden">
+    <section id="certifications" className="py-8 md:py-10 relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/3 right-1/4 w-72 h-72 bg-violet-500/4 rounded-full blur-[100px]" />
         <div className="absolute bottom-1/3 left-1/4 w-64 h-64 bg-cyan-500/4 rounded-full blur-[100px]" />

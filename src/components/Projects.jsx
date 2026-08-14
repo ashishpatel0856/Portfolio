@@ -97,7 +97,7 @@ const Projects = () => {
   const [hoveredId, setHoveredId] = useState(null)
 
   return (
-    <section id="projects" className="py-14 md:py-16 bg-[#08080c] relative overflow-hidden">
+    <section id="projects" className="py-8 md:py-10 relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 left-1/3 w-72 h-72 bg-violet-500/4 rounded-full blur-[100px]" />
         <div className="absolute bottom-0 right-1/3 w-64 h-64 bg-cyan-500/4 rounded-full blur-[100px]" />
@@ -253,8 +253,17 @@ const Projects = () => {
                     <ul className="space-y-1.5">
                       {selectedProject.features.map((feature, index) => (
                         <li key={index} className="flex items-start gap-2 text-gray-400 text-xs leading-relaxed">
-                          <span className={`w-1 h-1 rounded-full ${c.bg.replace('bg-', 'bg-')} mt-1.5 flex-shrink-0`} style={{ background: project.accent === 'violet' ? '#8b5cf6' : project.accent === 'cyan' ? '#06b6d4' : '#10b981' }} />
-                          {feature}
+                          <span
+                            className={`w-1 h-1 rounded-full ${c.bg.replace('bg-', 'bg-')} mt-1.5 flex-shrink-0`}
+                            style={{
+                              background:
+                                selectedProject.accent === 'violet'
+                                  ? '#8b5cf6'
+                                  : selectedProject.accent === 'cyan'
+                                    ? '#06b6d4'
+                                    : '#10b981'
+                            }}
+                          />                          {feature}
                         </li>
                       ))}
                     </ul>

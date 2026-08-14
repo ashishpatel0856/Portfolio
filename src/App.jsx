@@ -102,7 +102,7 @@ function App() {
             {/* Logo */}
             <button onClick={() => handleNavClick('#home')} className="text-lg font-bold group">
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-400 to-cyan-400 group-hover:from-cyan-400 group-hover:to-violet-400 transition-all duration-500">
-                Ashish.
+                Ashish Kumar
               </span>
             </button>
 

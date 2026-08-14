@@ -97,7 +97,7 @@ const Skills = () => {
   const colors = accentColors[activeCat.accent]
 
   return (
-    <section id="skills" className="py-14 md:py-16 bg-[#08080c] relative overflow-hidden">
+    <section id="skills" className="py-8 md:py-10 relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 left-1/3 w-72 h-72 bg-violet-500/4 rounded-full blur-[100px]" />
         <div className="absolute bottom-0 right-1/3 w-64 h-64 bg-cyan-500/4 rounded-full blur-[100px]" />
@@ -202,7 +202,7 @@ const Skills = () => {
         >
           {[
             { label: 'Technologies', value: '30+', icon: Layers, color: 'text-violet-400' },
-            { label: 'Backend Focus', value: '60%', icon: Server, color: 'text-cyan-400' },
+            { label: 'Backend Focus', value: '90%', icon: Server, color: 'text-cyan-400' },
             { label: 'Projects Built', value: '10+', icon: Zap, color: 'text-emerald-400' },
           ].map((stat) => (
             <div key={stat.label} className="text-center p-3 rounded-xl bg-white/[0.02] border border-white/[0.05]">

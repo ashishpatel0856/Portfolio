@@ -81,7 +81,7 @@ const Hero = ({ resumeLink, onDownload }) => {
   const techStack = ['Java', 'Spring Boot', 'React', 'MySQL', 'Docker', 'AWS']
 
   return (
-    <section id="home" className="relative min-h-[95vh] flex items-center justify-center bg-[#08080c] overflow-hidden">
+    <section id="home" className="relative min-h-[95vh] flex items-center justify-center overflow-hidden">
 
       {/* ===== BACKGROUND EFFECTS ===== */}
       <div className="absolute inset-0">

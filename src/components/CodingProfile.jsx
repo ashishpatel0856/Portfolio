@@ -66,7 +66,7 @@ const CodingProfile = () => {
   const [hoveredIdx, setHoveredIdx] = useState(null)
 
   return (
-    <section id="coding" className="py-14 md:py-16 bg-[#08080c] relative overflow-hidden">
+    <section id="coding" className="py-8 md:py-10 relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-violet-500/4 rounded-full blur-[100px]" />
         <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-cyan-500/4 rounded-full blur-[100px]" />
