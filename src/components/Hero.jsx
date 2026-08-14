@@ -78,7 +78,7 @@ const Hero = ({ resumeLink, onDownload }) => {
     { icon: Phone, href: 'tel:+919129900856', label: 'Phone' },
   ]
 
-  const techStack = ['Java', 'Spring Boot', 'React', 'MySQL', 'Docker', 'AWS']
+  const techStack = ['Java', 'Spring Boot', 'React','MERN', 'PostgreSql', 'AWS']
 
   return (
     <section id="home" className="relative min-h-[95vh] flex items-center justify-center overflow-hidden">
