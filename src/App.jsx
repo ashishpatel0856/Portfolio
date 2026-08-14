@@ -31,7 +31,7 @@ function App() {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50)
 
-      const sections = ['home', 'about', 'skills', 'projects', 'education', 'coding', 'certifications', 'contact']
+      const sections = ['home', 'about', 'skills', 'projects', 'education', 'certifications', 'contact']
       for (const section of sections) {
         const element = document.getElementById(section)
         if (element) {
@@ -80,7 +80,7 @@ function App() {
     { name: 'Skills', href: '#skills' },
     { name: 'Projects', href: '#projects' },
     { name: 'Education', href: '#education' },
-    { name: 'Coding', href: '#coding' },
+    // { name: 'Coding', href: '#coding' },
     { name: 'Certs', href: '#certifications' },
     { name: 'Contact', href: '#contact' },
   ]
@@ -190,7 +190,7 @@ function App() {
         <Skills />
         <Projects />
         <Education />
-        <CodingProfile />
+        {/* <CodingProfile /> */}
         <Certifications />
         <Contact />
       </main>

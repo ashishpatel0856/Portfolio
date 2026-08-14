@@ -148,17 +148,6 @@ const Education = () => {
           ))}
         </motion.div>
 
-        {/* Bottom Note */}
-        <motion.div initial={{ opacity: 0, y: 12 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0.5, duration: 0.4 }}
-          className="mt-8 text-center"
-        >
-          <div className="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-white/[0.02] border border-white/[0.05]">
-            <Star className="w-3.5 h-3.5 text-yellow-400" />
-            <span className="text-xs text-gray-500">
-              Scoring <span className="text-white font-semibold">7.86 CGPA</span> with active involvement in <span className="text-violet-400 font-medium">Cloud Computing Club</span>
-            </span>
-          </div>
-        </motion.div>
       </div>
     </section>
   )
