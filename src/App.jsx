@@ -14,7 +14,7 @@ function App() {
   const [scrolled, setScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState('home')
 
-  const RESUME_DRIVE_LINK = "https://drive.google.com/file/d/1ShrgjkMqL_BVove5l03hGhynRPoZHPEO/view?usp=sharing"
+  const RESUME_DRIVE_LINK = "https://drive.google.com/file/d/1_6e31T5cUt5VNauEymybDSfYrCXE9aOL/view?usp=drivesdk"
 
   const getDirectDownloadLink = (driveLink) => {
     const fileId = driveLink.match(/\/d\/(.+?)\//)?.[1] || driveLink.match(/id=(.+?)(&|$)/)?.[1]
