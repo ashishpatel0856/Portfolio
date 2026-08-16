@@ -8,6 +8,7 @@ import Projects from './components/Projects'
 import Education from './components/Education'
 import Certifications from './components/Certifications'
 import Contact from './components/Contact'
+import Experience from './components/Experience'
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -30,7 +31,7 @@ function App() {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50)
 
-      const sections = ['home', 'about', 'skills', 'projects', 'education', 'certifications', 'contact']
+      const sections = ['home', 'about', 'skills', 'projects', 'education','experience' ,'certifications', 'contact']
       for (const section of sections) {
         const element = document.getElementById(section)
         if (element) {
@@ -79,7 +80,7 @@ function App() {
     { name: 'Skills', href: '#skills' },
     { name: 'Projects', href: '#projects' },
     { name: 'Education', href: '#education' },
-    // { name: 'Coding', href: '#coding' },
+    { name: 'Experience', href: '#experience' },
     { name: 'Certs', href: '#certifications' },
     { name: 'Contact', href: '#contact' },
   ]
@@ -189,7 +190,7 @@ function App() {
         <Skills />
         <Projects />
         <Education />
-        {/* <CodingProfile /> */}
+        <Experience/>
         <Certifications />
         <Contact />
       </main>
