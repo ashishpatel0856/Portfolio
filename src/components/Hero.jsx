@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Github, Linkedin, Mail, Phone, ChevronDown, MapPin, Download, ArrowRight } from 'lucide-react'
 
-import PHOTO_URL from '../assets/photo.jpeg'
+import PHOTO_URL from '../assets/ashishimage.jpeg'
 
 const TypingText = ({ text, className = '', delay = 0 }) => {
   const letters = Array.from(text)
