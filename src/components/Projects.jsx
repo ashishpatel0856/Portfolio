@@ -47,7 +47,7 @@ const projects = [
       { icon: Users, label: '3 Roles' },
     ],
     github: 'https://github.com/ashishpatel0856/UberApp',
-    live: 'https://uber-app1.vercel.app/',
+    live: 'https://uber-pbwnakmho-ashipatel0856s-projects.vercel.app/',
     accent: 'cyan',
   },
   {
